@@ -1,0 +1,16 @@
+{
+	"/":
+	{
+		"controller": "example",
+		"cache": 20
+	},
+	"/example/":
+	{
+		"controller": "example",
+		"cache": 100
+	},
+	"/*/yeah/?/?/":
+	{
+		"controller": "yeah"
+	}
+}
