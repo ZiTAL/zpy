@@ -6,11 +6,11 @@ import web, json, re
 class Route(object):
 
 	def main(self):
-		routes = self.__load()
+		routes = self._load()
 		return routes
-	#	return "method: "+web.ctx.method + " path:"+web.ctx.path
+		#return "method: "+web.ctx.method + " path:"+web.ctx.path
 
-	def _load():
+	def _load(self):
 		# get routes
 		f = open('config/route.json')
 		r = json.load(f)
@@ -32,16 +32,16 @@ class Route(object):
 		# redirect to 404 page
 		return None;
 
-	def _getPath():
+	def _getPath(self):
 		return web.ctx.path
 
-	def __regex(url, to_match):
+	def _regex(self, url, to_match):
 		# replace * -> a-z 0-9 -
 		to_match = re.sub("\*", "[A-Za-z\-\_\%]+", to_match)
 
 		# replace ? -> a-z 0-9 - or nothing
 		to_match = re.sub("/\?", "(|/[A-Za-z\-\_\%]+)", to_match)
-		
+
 		if re.match(r'^'+to_match+'$', url):
 			return True
 		return None
