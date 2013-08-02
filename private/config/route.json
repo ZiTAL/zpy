@@ -4,13 +4,15 @@
 		"controller": "example",
 		"cache": 20
 	},
-	"/example/":
+	"/bat/":
 	{
 		"controller": "example",
+		"method": "bat",
 		"cache": 100
 	},
-	"/*/yeah/?/?/":
+	"/bi/":
 	{
-		"controller": "yeah"
+		"controller": "example",
+		"method": "bi"
 	}
 }

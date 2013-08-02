@@ -18,7 +18,7 @@ class Zpy:
 		return self.main() 
 
 	def main(self):
-		r = Route()       
+		r = Route()
 		return r.main()
 		#return "method: "+web.ctx.method + " path:"+web.ctx.path
 		#return web.input(_method=web.ctx.method)
