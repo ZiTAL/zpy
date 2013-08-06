@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import web
+import sys, web
 from lib.route import Route
+
+sys.dont_write_bytecode = True
 
 urls = ("/.*", "Zpy")
 app = web.application(urls, globals())

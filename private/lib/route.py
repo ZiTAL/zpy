@@ -20,8 +20,7 @@ class Route(object):
 		path = self._getPath()
 
 		# if url doesn't end with /, redirect to / ended url
-		m = re.search(r'[^\/]$', path)
-		if(m!=None):
+		if not path.endswith('/'):
 			path = path + "/"
 			web.redirect(path, '301 ')
 
@@ -31,10 +30,12 @@ class Route(object):
 			if self._regex(path, key):
 
 				# controller dynamic load
-				module_name = "controller."+value['controller'] 
+				#module_name = "controller."+value['controller']
+				module_name = "controller.{}".format(value['controller'])
 
 				# uppercase first char
-				class_name = value['controller'][0].upper() + value['controller'][1:]
+				#class_name = value['controller'][0].upper() + value['controller'][1:]
+				class_name = value['controller'].title()
 
 				#default method name
 				method_name = 'main'
@@ -59,7 +60,10 @@ class Route(object):
 
 
 	def _getPath(self):
-		return web.ctx.path
+		if 'path' in web.ctx:
+			return web.ctx.path
+		else:
+			return "/"
 
 	def _regex(self, url, to_match):
 		# allowed pattern
