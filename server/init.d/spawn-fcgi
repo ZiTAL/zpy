@@ -1,0 +1,64 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          spawn-cgi
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: fastcgi for python
+# Description:       fastcgi for python using nginx
+#                    placed in /etc/init.d.
+### END INIT INFO
+#
+# original https://gist.github.com/ozeias/47394
+# modified to use with python
+#
+# to install in debian gnu/linux:
+# update-rc.d spawn-fcgi defaults
+ 
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/spawn-fcgi
+NAME=spawn-fcgi
+DESC=spawn-fcgi
+
+HOST='127.0.0.1'
+PORT=9000
+
+FOLDER='/home/projects/zpy/private'
+SCRIPT='zpy.py'
+USER='zital'
+GROUP='zital'
+
+DAEMON_OPTS="-d ${FOLDER} -f ${FOLDER}/${SCRIPT} -a ${HOST} -p ${PORT} -P /var/run/${NAME}.pid -u ${USER} -g ${GROUP}"
+ 
+test -x $DAEMON || exit 0
+ 
+set -e
+ 
+case "$1" in
+	start)
+		echo -n "Starting $DESC: "
+		start-stop-daemon --start --exec $DAEMON -- $DAEMON_OPTS
+	;;
+	stop)
+		echo -n "Stopping $DESC: "
+		start-stop-daemon --stop --pidfile /var/run/$NAME.pid
+	;;
+#	restart)
+#		echo -n "Restarting $DESC: "
+#		start-stop-daemon --stop --quiet --pidfile \
+#		/var/run/$NAME.pid --exec $DAEMON
+#		sleep 1
+#		start-stop-daemon --start --quiet --pidfile \
+#		/var/run/$NAME.pid --exec $DAEMON -- $DAEMON_OPTS
+#		echo "$NAME."
+#	;;
+	*)
+		N=/etc/init.d/$NAME
+		echo "Usage: $N {start|stop}" >&2
+		exit 1
+		;;
+	esac
+ 
+exit 0
+
