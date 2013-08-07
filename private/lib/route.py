@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import web, json, re, sys
+import web, json, re
+
+from lib.url import Url
 
 class Route(object):
 
@@ -16,8 +18,8 @@ class Route(object):
 		f = open('config/route.json')
 		r = json.load(f)
 
-		# get url
-		path = self._getPath()
+		# get uri
+		path = Url.getUri()
 
 		# if url doesn't end with /, redirect to / ended url
 		if not path.endswith('/'):
@@ -53,17 +55,11 @@ class Route(object):
 
 				# exec method from class instance
 				func = getattr(controller_instance, method_name)
+
 				return func()
 
 		# redirect to 404 page
 		return None;
-
-
-	def _getPath(self):
-		if 'path' in web.ctx:
-			return web.ctx.path
-		else:
-			return "/"
 
 	def _regex(self, url, to_match):
 		# allowed pattern
