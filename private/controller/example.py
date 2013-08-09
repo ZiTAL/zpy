@@ -7,6 +7,8 @@ class Example(object):
 
 	def main(self):		
 		count = Session.get('count')
+		if count == False:
+			count = 0
 		count = count + 1
 		Session.set('count', count)
 		return count
