@@ -14,5 +14,10 @@
 	{
 		"controller": "example",
 		"method": "bi"
+	},
+	"/hiru/":
+	{
+		"controller": "example",
+		"method": "hiru"
 	}
 }

@@ -9,6 +9,16 @@ sys.dont_write_bytecode = True
 urls = ("/.*", "Zpy")
 app = web.application(urls, globals())
 
+# sessions in sqlite
+db = web.database(dbn='sqlite', db='config/session.db')
+store = web.session.DBStore(db, 'sessions')
+session = web.session.Session(app, store, initializer={'count': 0})
+
+def session_hook():
+    web.ctx.session = session
+
+app.add_processor(web.loadhook(session_hook))
+
 class Zpy:
 	def GET(self):
 		return self.main()
@@ -26,5 +36,6 @@ class Zpy:
 		#return web.input(_method=web.ctx.method)
 
 if __name__ == "__main__":
-	web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
+	# for cgi
+	#web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
 	app.run()
