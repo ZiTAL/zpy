@@ -12,7 +12,8 @@ app = web.application(urls, globals())
 # sessions in sqlite
 db = web.database(dbn='sqlite', db='config/session.db')
 store = web.session.DBStore(db, 'sessions')
-session = web.session.Session(app, store, initializer={'count': 0})
+#session = web.session.Session(app, store, initializer={'count': 0})
+session = web.session.Session(app, store)
 
 def session_hook():
     web.ctx.session = session

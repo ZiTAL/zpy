@@ -4,20 +4,9 @@
 		"controller": "example",
 		"cache": 20
 	},
-	"/bat/":
+	"/logout/":
 	{
 		"controller": "example",
-		"method": "bat",
-		"cache": 100
-	},
-	"/bi/":
-	{
-		"controller": "example",
-		"method": "bi"
-	},
-	"/hiru/":
-	{
-		"controller": "example",
-		"method": "hiru"
+		"method": "logout"
 	}
 }
