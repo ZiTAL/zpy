@@ -4,23 +4,31 @@
 import sys, web
 from lib.route import Route
 
-sys.dont_write_bytecode = True
-
 urls = ("/.*", "Zpy")
 app = web.application(urls, globals())
 
-# sessions in sqlite
+# aptitude install sqlite3
+# sessions in sqlite3
+# sqlite3 config/session.db
+#
+# create table sessions (
+#    session_id char(128) UNIQUE NOT NULL,
+#    atime timestamp NOT NULL default current_timestamp,
+#    data text
+#);
+# doesn't work with sqlite2
+
 db = web.database(dbn='sqlite', db='config/session.db')
 store = web.session.DBStore(db, 'sessions')
-#session = web.session.Session(app, store, initializer={'count': 0})
 session = web.session.Session(app, store)
 
+# put session object in web.py's ctx namespace
 def session_hook():
     web.ctx.session = session
-
 app.add_processor(web.loadhook(session_hook))
 
-class Zpy:
+# for each http request method redirect to Route
+class Zpy(object):
 	def GET(self):
 		return self.main()
 	def POST(self):
