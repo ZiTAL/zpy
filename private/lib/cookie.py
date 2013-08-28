@@ -7,7 +7,10 @@ class Cookie(object):
 
 	@staticmethod
 	def get(key):
-		return webapi.cookies()
+		cookies = webapi.cookies()
+		if key in cookies:
+			return cookies[key]
+		return None
 
 	@staticmethod
 	def set(key, value, expire):

@@ -1,12 +1,46 @@
 {
 	"/":
 	{
-		"controller": "example",
-		"cache": 20
+		"controller": "default"
 	},
-	"/logout/":
+	"/cookie/set/":
 	{
-		"controller": "example",
-		"method": "logout"
+		"controller": "cookies",
+		"method": "set"
+	},
+	"/cookie/get/":
+	{
+		"controller": "cookies",
+		"method": "get"
+	},
+	"/cookie/destroy/":
+	{
+		"controller": "cookies",
+		"method": "destroy"
+	},
+	"/session/set/":
+	{
+		"controller": "sessions",
+		"method": "set"
+	},
+	"/session/get/":
+	{
+		"controller": "sessions",
+		"method": "get"
+	},
+	"/session/add/":
+	{
+		"controller": "sessions",
+		"method": "add"
+	},
+	"/session/remove/":
+	{
+		"controller": "sessions",
+		"method": "remove"
+	},
+	"/session/destroy/":
+	{
+		"controller": "sessions",
+		"method": "destroy"
 	}
 }
