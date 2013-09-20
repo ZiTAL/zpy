@@ -4,20 +4,12 @@
 import sys, web
 from lib.route import Route
 
+web.config.debug = True
+
 urls = ("/.*", "Zpy")
 app = web.application(urls, globals())
 
-# aptitude install sqlite3
-# sessions in sqlite3
-# sqlite3 config/session.db
-#
-# create table sessions (
-#    session_id char(128) UNIQUE NOT NULL,
-#    atime timestamp NOT NULL default current_timestamp,
-#    data text
-#);
-# doesn't work with sqlite2
-
+# sessions in db
 db = web.database(dbn='sqlite', db='config/session.db')
 store = web.session.DBStore(db, 'sessions')
 session = web.session.Session(app, store)
@@ -41,7 +33,6 @@ class Zpy(object):
 	def main(self):
 		r = Route()
 		return r.main()
-		#return "method: "+web.ctx.method + " path:"+web.ctx.path
 		#return web.input(_method=web.ctx.method)
 
 if __name__ == "__main__":

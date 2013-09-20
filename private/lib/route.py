@@ -13,7 +13,6 @@ class Route(object):
 		#return "method: "+web.ctx.method + " path:"+web.ctx.path
 
 	def _load(self):
-
 		# get routes
 		f = open('config/route.json')
 		r = json.load(f)
@@ -32,11 +31,9 @@ class Route(object):
 			if self._regex(path, key):
 
 				# controller dynamic load
-				#module_name = "controller."+value['controller']
 				module_name = "controller.{}".format(value['controller'])
 
 				# uppercase first char
-				#class_name = value['controller'][0].upper() + value['controller'][1:]
 				class_name = value['controller'].title()
 
 				#default method name
@@ -45,18 +42,35 @@ class Route(object):
 					method_name = value['method']
 
 				# from path import module
-				module = __import__(module_name, fromlist=[class_name])
+				try:
+					module = __import__(module_name, fromlist=[class_name])
+				except Exception:
+					return "Error importing controller: "+class_name
 
 				# get class from module
-				class_object = getattr(module, class_name)
+				try:
+					class_object = getattr(module, class_name)
+				except Exception:
+					return "Error importing class from controller: "+class_name
 
 				# instance module
-				controller_instance = class_object()
+				try:
+					controller_instance = class_object()
+				except Exception:
+					return "Error instantiating class: "+class_name
 
 				# exec method from class instance
-				func = getattr(controller_instance, method_name)
+				try:				
+					func = getattr(controller_instance, method_name)
+				except Exception:
+					return "Error method not found: "+method_name
 
-				return func()
+				# method instance
+				try:
+					func_instance = func()
+					return func_instance
+				except Exception:
+					return "Error executing method: "+func
 
 		# redirect to 404 page
 		return None;
