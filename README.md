@@ -10,6 +10,7 @@ pip install Jinja2
 pip install web.py
 ```
 
+archlinux users
 if you have both version of python installed (2.x and 3.x) use pip for python2:
 ```
 pip2 install flup
@@ -35,8 +36,10 @@ WARNING: does not work with sqlite2
 
 running
 =======
+```
 cd /home/projects/zpy/private
 python2 zpy.py
+```
 
 LICENSE
 =======
