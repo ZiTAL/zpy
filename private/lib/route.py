@@ -3,6 +3,7 @@
 
 import web, json, re
 
+from lib.error import Error
 from lib.url import Url
 
 class Route(object):
@@ -44,33 +45,34 @@ class Route(object):
 				# from path import module
 				try:
 					module = __import__(module_name, fromlist=[class_name])
-				except Exception:
-					return "Error importing controller: "+class_name
+				except Exception as e:
+					return Error.log(e)
 
 				# get class from module
 				try:
 					class_object = getattr(module, class_name)
-				except Exception:
-					return "Error importing class from controller: "+class_name
+				except Exception as e:
+					return Error.log(e)
 
 				# instance module
 				try:
 					controller_instance = class_object()
-				except Exception:
-					return "Error instantiating class: "+class_name
+				except Exception as e:
+					return Error.log(e)
 
 				# exec method from class instance
 				try:				
 					func = getattr(controller_instance, method_name)
-				except Exception:
-					return "Error method not found: "+method_name
+				except Exception as e:
+					return Error.log(e)
 
 				# method instance
 				try:
 					func_instance = func()
 					return func_instance
-				except Exception:
-					return "Error executing method: "+func
+				except Exception as e:
+					if(str(e) != '303 See Other'):
+						return Error.log(e)
 
 		# redirect to 404 page
 		return None;

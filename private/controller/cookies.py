@@ -1,50 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import web
+from core.Controller import Controller
+from core.View import View
+
 from lib.cookie import Cookie
 
-class Cookies(object):
+class Cookies(Controller):
 
 	def set(self):
-		Cookie.set('key', 'value', 3600)
+		params = {}
+		params['key'] = 'key'
+		params['value'] = 'zpy is the law'
 
-		html = """<!doctype html>
-<html>
-<head>
-<title>Cookie set</title>
-</head>
-<body>
-<p>Cookie set "key" => "value"
-</body>
-</html>"""
-		return html
+		Cookie.set(params['key'], params['value'], 3600)
 
+		return View.load('/cookie/set.tpl', params)
 
 	def get(self):
-		html = """<!doctype html>
-<html>
-<head>
-<title>Cookie get</title>
-</head>
-<body>
-<p>Cookie key: <strong>{key}</strong> and value: <strong>{value}</strong></p>
-</body>
-</html>"""
+		params = {}
+		params['key'] = 'key'
+		params['value'] = Cookie.get('key')
 
-		html = html.format(key="key", value=Cookie.get('key'))
-		return html
+		return View.load('/cookie/get.tpl', params)		
 
 	def destroy(self):
 		Cookie.delete('key')
-
-		html = """<!doctype html>
-<html>
-<head>
-<title>Cookie get</title>
-</head>
-<body>
-<p>Cookie "key" deleted</p>
-</body>
-</html>"""
-		return html
+		return View.load('/cookie/destroy.tpl')

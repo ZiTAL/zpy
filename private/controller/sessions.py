@@ -2,38 +2,24 @@
 # -*- coding: utf-8 -*-
 
 import web
+
+from core.Controller import Controller
+from core.View import View
+
 from lib.session import Session
 
-class Sessions(object):
+class Sessions(Controller):
 
 	def set(self):
 		Session.set('count', 1)
-
-		html = """<!doctype html>
-<html>
-<head>
-<title>Session set</title>
-</head>
-<body>
-<p>Session set "count" => "1"
-</body>
-</html>"""
-		return html
-
+		return View.load('/session/set.tpl')
 
 	def get(self):
-		html = """<!doctype html>
-<html>
-<head>
-<title>Session get</title>
-</head>
-<body>
-<p>Session key: <strong>{key}</strong> and value: <strong>{value}</strong></p>
-</body>
-</html>"""
+		params = {}
+		params['key'] = 'count'
+		params['value'] = Session.get('count')
 
-		html = html.format(key="count", value=Session.get('count'))
-		return html
+		return View.load('/session/get.tpl', params)
 
 	def add(self):
 		count = Session.get('count')

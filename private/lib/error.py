@@ -7,6 +7,7 @@ class Error(object):
 
 	@staticmethod
 	def log(e):
+		"""
 		stack = inspect.stack()
 		
 		msg = ''
@@ -27,5 +28,5 @@ class Error(object):
 
 		if(e!=''):
 			msg += "\tError:\t\t"+str(e)+"\n\n"
-
-		print >> sys.stderr, msg
+		"""
+		print >> sys.stderr, ":"+str(e)+":"

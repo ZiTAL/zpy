@@ -6,7 +6,15 @@ zpy simple framework using python's web.py
 requirements:
 ```
 pip install flup
+pip install Jinja2
 pip install web.py
+```
+
+if you have both version of python installed (2.x and 3.x) use pip for python2:
+```
+pip2 install flup
+pip2 install Jinja2
+pip2 install web.py
 ```
 
 sessions in sqlite3:
@@ -24,6 +32,11 @@ create table sessions (
 );
 ```
 WARNING: does not work with sqlite2
+
+running
+=======
+cd /home/projects/zpy/private
+python2 zpy.py
 
 LICENSE
 =======
