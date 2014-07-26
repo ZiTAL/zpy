@@ -3,7 +3,8 @@
 
 import web, json, re
 
-from lib.error import Error
+from core.error import Error
+from lib.log import Log
 from lib.url import Url
 
 class Route(object):
@@ -22,9 +23,9 @@ class Route(object):
 		path = Url.getUri()
 
 		# if url doesn't end with /, redirect to / ended url
-		if not path.endswith('/'):
+		if path.endswith('/') == False:
 			path = path + "/"
-			web.redirect(path, '301 ')
+			raise web.redirect(path, '301 ')
 
 		# check url in routes json
 		for key,value in r.items():
@@ -46,36 +47,39 @@ class Route(object):
 				try:
 					module = __import__(module_name, fromlist=[class_name])
 				except Exception as e:
-					return Error.log(e)
+					return Log.error(e)
 
 				# get class from module
 				try:
 					class_object = getattr(module, class_name)
 				except Exception as e:
-					return Error.log(e)
+					return Log.error(e)
 
 				# instance module
 				try:
 					controller_instance = class_object()
 				except Exception as e:
-					return Error.log(e)
+					return Log.error(e)
 
 				# exec method from class instance
 				try:				
 					func = getattr(controller_instance, method_name)
 				except Exception as e:
-					return Error.log(e)
+					return Log.error(e)
 
 				# method instance
 				try:
 					func_instance = func()
 					return func_instance
 				except Exception as e:
-					if(str(e) != '303 See Other'):
-						return Error.log(e)
+					m = re.match("[0-9]{3}", str(e))
+					if m:
+						http_code = m.group(0)
+						if re.match("(4|5)", http_code):
+							Error(http_code)
 
 		# redirect to 404 page
-		return None;
+		raise Error('404')
 
 	def _regex(self, url, to_match):
 		# allowed pattern

@@ -1,10 +1,11 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
 
-import sys, web
+import sys, json, web
+from lib.env import Env
 from lib.route import Route
 
-web.config.debug = True
+web.config.debug = False
 
 urls = ("/.*", "Zpy")
 app = web.application(urls, globals())
@@ -31,6 +32,7 @@ class Zpy(object):
 		return self.main() 
 
 	def main(self):
+		Env.setFromFile('config/env.json')
 		r = Route()
 		return r.main()
 		#return web.input(_method=web.ctx.method)

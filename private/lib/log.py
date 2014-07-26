@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys, inspect, re
+import sys, inspect
 
-class Error(object):
+class Log(object):
 
 	@staticmethod
-	def log(e):
-		"""
+	def debug(e):
+		print >> sys.stderr, str(e)
+		
+	@staticmethod
+	def error(e):
 		stack = inspect.stack()
 		
 		msg = ''
@@ -28,5 +31,3 @@ class Error(object):
 
 		if(e!=''):
 			msg += "\tError:\t\t"+str(e)+"\n\n"
-		"""
-		print >> sys.stderr, ":"+str(e)+":"

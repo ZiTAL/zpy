@@ -3,8 +3,8 @@
 
 import web
 
-from core.Controller import Controller
-from core.View import View
+from core.controller import Controller
+from core.view import View
 
 from lib.session import Session
 
