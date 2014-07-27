@@ -14,7 +14,7 @@ class View(object):
 	@staticmethod
 	def load(file, params={}):
 		tpl = view_folder+file
-		if(os.path.isfile(tpl) and os.access(tpl, os.R_OK)):
+		if os.path.isfile(tpl) and os.access(tpl, os.R_OK):
 			tpl = env.get_template(file)
 			return tpl.render(params)
 		else:

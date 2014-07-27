@@ -25,11 +25,11 @@ class Error(web.HTTPError):
 			params['value'] = jhsc[status]		
 		
 		# status tpl
-		if(tpl==None):
+		if tpl==None:
 			tpl = "error/"+status+".tpl"
 		
 		# Content type required header
-		if('Content-Type' in headers):
+		if 'Content-Type' in headers:
 			pass
 		else:
 			headers['Content-Type'] = 'text/html'

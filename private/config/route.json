@@ -1,7 +1,7 @@
 {
 	"/":
 	{
-		"controller": "default"
+		"controller": "default_"
 	},
 	"/cookie/set/":
 	{

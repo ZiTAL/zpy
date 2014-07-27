@@ -23,6 +23,5 @@ class Env(object):
 		fenv = open(file)
 		jenv = json.load(fenv)
 
-		Log.debug(web.ctx.env)
 		for key,value in jenv.items():
 			web.ctx.env[key] = value

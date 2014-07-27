@@ -11,7 +11,14 @@ class Log(object):
 		
 	@staticmethod
 	def error(e):
+		# get code traces
 		stack = inspect.stack()
+
+		#revert stack list
+		stack = stack[::-1]
+		# remove web.py's logs
+		for i in range(0, 26):
+			stack.pop(0)
 		
 		msg = ''
 		for i in stack:
@@ -24,10 +31,10 @@ class Log(object):
 			msg2 += "\tFunc:\t\t"+str(i[3])+"\n"
 			msg2 += "\tCode:\t\t"+code+"\n\n"
 
-			msg = msg2 + msg
-
+			msg = msg + msg2
 
 		msg = "zpy error:\n"+msg
 
-		if(e!=''):
+		if e!='':
 			msg += "\tError:\t\t"+str(e)+"\n\n"
+			Log.debug(msg)			

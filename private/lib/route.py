@@ -47,7 +47,8 @@ class Route(object):
 				try:
 					module = __import__(module_name, fromlist=[class_name])
 				except Exception as e:
-					return Log.error(e)
+					Log.error(e)
+					raise Error('500')
 
 				# get class from module
 				try:
